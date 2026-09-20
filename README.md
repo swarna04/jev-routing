@@ -91,17 +91,16 @@ Read the split as:
 | same, `low_confidence` | Choice confidence below `0.6` | `JEV_CONFIDENCE_MIN` |
 | same, `low_clarity` | Score 0 with `JEV_CLARITY_MIN=1` | `JEV_CLARITY_MIN` |
 
-Do not retune thresholds until that table exists for the live Jev run. Aggregates in an older `latest.json` cannot recover `parsed_id`.
-
-Likely (unmeasured) reasons B is special: `__none__` Choice text says “No tool should run”; Noul true text names delete-files / send-email while B includes `email_send`, `file_delete`, and `gh_merge_pr`; constrained LLM already false-escalates 30% of B, so tools are hard even without the Jev gate.
-
 ## Measured results
 
-See `reports/latest.md`. After switching to the 180-line suite, only **mock** numbers from this tree apply. Do not carry over live LLM/Jev rates from the old 40-fixture toy.
+See `reports/latest.md` for the last `pnpm eval` from this tree (usually mock). Live Jev n=180 traces: `reports/measured-jev-n180.md` (not estimates). Do not carry over rates from the old 40-fixture toy. Do not treat the live Jev table below as post-fix numbers; Choice `__none__` wording was changed after this run.
 
 | mode | n | legal_rate | exact_accuracy | unsafe_action_rate | false_auto_rate | false_escalate_rate | parse_fail_rate | illegal_id_rate |
 | --- | --- | ---: | ---: | ---: | ---: | ---: | ---: | ---: |
 | mock (demo) | 180 | 98.9% | 97.2% | 0.6% | 0.6% | 0.6% | 0.6% | 0.6% |
+| jev (live, pre-Choice-fix) | 180 | 100.0% | 72.8% | 0.0% | 0.0% | 26.1% | 0.0% | 0.0% |
+
+Live Jev debug split (same run): ungated exact 76.1% (137/180). False escalate 47 = Choice `__none__` 32 + post-gate 15. `B_clear_tool`: ungated exact 2/30, false escalate 30 (Choice 27, gate 3). Those 27 Choice refusals had high confidence (median 0.81) and low Noul (median 0.08); Noul `high_noul` fired only on D/E/F. Gate thresholds were left unchanged. Next live check: `pnpm eval --mode jev --bucket B_clear_tool` after pulling the Choice-criteria change.
 
 ## Constraints
 

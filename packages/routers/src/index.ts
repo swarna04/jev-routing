@@ -8,7 +8,7 @@ import type { Router } from "./types.ts";
 export { parseBareHop } from "./parse.ts";
 export { createBareLlmRouter } from "./bare-llm.ts";
 export { createConstrainedLlmRouter } from "./constrained-llm.ts";
-export { createJevRouter } from "./jev.ts";
+export { choiceCriteria, createJevRouter, NEXT_HOP_QUESTION } from "./jev.ts";
 export { createMockRouter, mockPrediction, type MockScript } from "./mock.ts";
 export type { Router } from "./types.ts";
 

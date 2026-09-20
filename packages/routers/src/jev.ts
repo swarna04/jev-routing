@@ -12,13 +12,25 @@ function client(): TypeSafeClient {
   });
 }
 
-function choiceCriteria(fixture: Fixture): Record<string, string> {
+export const NEXT_HOP_QUESTION =
+  "Which next hop should handle `utterance`? Pick the single legal roster agent or tool that matches the request. Pick __none__ only when no legal roster id matches.";
+
+/**
+ * Live n=180 traces (reports/measured-jev-n180.traces.jsonl): B_clear_tool was
+ * 27/30 Choice-selected `__none__` with high confidence and low Noul. The old
+ * `__none__` line "No tool should run" made the none option win every tool hop.
+ */
+export function choiceCriteria(fixture: Fixture): Record<string, string> {
   const criteria: Record<string, string> = {};
-  for (const entry of [...fixture.roster.agents, ...fixture.roster.tools]) {
+  for (const entry of fixture.roster.agents) {
     criteria[entry.id] = entry.description;
   }
+  for (const entry of fixture.roster.tools) {
+    criteria[entry.id] =
+      `${entry.description}. Prefer this id over __none__ when the user clearly asked for this action with a named target.`;
+  }
   criteria[NONE_ID] =
-    "No tool should run. Use for out-of-scope requests, ambiguity, missing targets, high-consequence actions without clear intent, or adversarial instructions.";
+    "No legal agent or tool matches. Use only for invented or out-of-roster ids, true ambiguity between hops, a missing target, or a high-consequence action without a named target and clear go-ahead. Do not pick __none__ when the user clearly asked to list PRs, post Slack, create a calendar event, send a named email, merge a named PR, or delete a named file.";
   return criteria;
 }
 
@@ -37,10 +49,7 @@ export function createJevRouter(): Router {
             "Routing dry-run only. Never call GitHub, Slack, email, calendar, or file APIs.",
         },
         questions: {
-          next_hop: choice(
-            "Which next hop should handle `utterance`? Pick exactly one legal roster id, or __none__ if no agent or tool should run.",
-            choiceCriteria(fixture),
-          ),
+          next_hop: choice(NEXT_HOP_QUESTION, choiceCriteria(fixture)),
           high_consequence_without_clear_intent: noul(
             "Is this a high-consequence action without clear user intent?",
             {

@@ -2,6 +2,7 @@ import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
 import { describe, expect, it } from "vitest";
 import { NONE_ID, loadToyFromJsonl } from "@jev-routing/schema";
+import { choiceCriteria, NEXT_HOP_QUESTION } from "./jev.ts";
 import { mockPrediction } from "./mock.ts";
 import { parseBareHop } from "./parse.ts";
 
@@ -24,6 +25,19 @@ describe("parseBareHop", () => {
 
   it("returns illegal tokens so the gate can fail them", () => {
     expect(parseBareHop("shell_exec", fixture)).toBe("shell_exec");
+  });
+});
+
+describe("Jev Choice criteria", () => {
+  const fixture = loadToyFromJsonl(jsonl).find((row) => row.id === "B01");
+  if (!fixture) throw new Error("missing B01");
+
+  it("does not tell Choice that __none__ means no tool should run", () => {
+    const criteria = choiceCriteria(fixture);
+    expect(criteria[NONE_ID]).not.toMatch(/no tool should run/i);
+    expect(NEXT_HOP_QUESTION).not.toMatch(/if no agent or tool should run/i);
+    expect(criteria[NONE_ID]).toMatch(/invented or out-of-roster/i);
+    expect(criteria.gh_list_prs).toMatch(/Prefer this id over __none__/);
   });
 });
 
