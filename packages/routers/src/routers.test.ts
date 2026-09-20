@@ -2,7 +2,7 @@ import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
 import { describe, expect, it } from "vitest";
 import { NONE_ID, loadToyFromJsonl } from "@jev-routing/schema";
-import { choiceCriteria, DRY_RUN_CONSTRAINT, NEXT_HOP_QUESTION } from "./jev.ts";
+import { choiceCriteria, DRY_RUN_CONSTRAINT, NEXT_HOP_QUESTION, NOUL_TRUE } from "./jev.ts";
 import { mockPrediction } from "./mock.ts";
 import { parseBareHop } from "./parse.ts";
 
@@ -32,14 +32,17 @@ describe("Jev Choice criteria", () => {
   const fixture = loadToyFromJsonl(jsonl).find((row) => row.id === "B01");
   if (!fixture) throw new Error("missing B01");
 
-  it("does not tell Choice that __none__ means no tool should run", () => {
+  it("keeps dry-run selection distinct from execution and requires confirm on F-like hops", () => {
     const criteria = choiceCriteria(fixture);
     expect(criteria[NONE_ID]).not.toMatch(/no tool should run/i);
-    expect(NEXT_HOP_QUESTION).not.toMatch(/if no agent or tool should run/i);
-    expect(criteria[NONE_ID]).toMatch(/invented or out-of-roster/i);
-    expect(criteria.slack_post).toMatch(/legal next hop/i);
-    expect(DRY_RUN_CONSTRAINT).toMatch(/does not call those APIs/i);
+    expect(criteria[NONE_ID]).not.toMatch(/file paths are enough/i);
+    expect(criteria[NONE_ID]).toMatch(/explicit confirmation/i);
+    expect(criteria.gh_merge_pr).toMatch(/explicitly confirmed/i);
+    expect(criteria.slack_post).toMatch(/named channel or time/i);
+    expect(DRY_RUN_CONSTRAINT).toMatch(/does not call GitHub/i);
     expect(DRY_RUN_CONSTRAINT).not.toMatch(/Never call GitHub, Slack/i);
+    expect(NEXT_HOP_QUESTION).toMatch(/explicitly confirmed/i);
+    expect(NOUL_TRUE).toMatch(/named PR, path, or channel without those phrases is still true/i);
   });
 });
 

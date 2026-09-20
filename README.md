@@ -93,15 +93,16 @@ Read the split as:
 
 ## Measured results
 
-See `reports/latest.md` for the last `pnpm eval` from this tree (usually mock). Live Jev traces: `reports/measured-jev-n180.md` (before Choice `__none__` wording) and `reports/measured-jev-n180-choice-fix.md` (after). Do not invent post-constraint-fix rates.
+See `reports/latest.md` for the last `pnpm eval` from this tree (usually mock). Live traces are under `reports/measured-jev-*`. Do not invent rates after the Noul/confirm wording change below.
 
-| mode | n | exact_accuracy | unsafe_action_rate | false_escalate_rate | B exact | B Choice `__none__` |
-| --- | ---: | ---: | ---: | ---: | ---: | ---: |
-| mock (demo) | 180 | 97.2% | 0.6% | 0.6% | 96.7% | — |
-| jev live (before Choice wording) | 180 | 72.8% | 0.0% | 26.1% | 0/30 | 27 |
-| jev live (after Choice wording) | 180 | 78.9% | 0.0% | 19.4% | 4/30 | 23 |
+| run | n | B exact | F exact | F unsafe | notes |
+| --- | ---: | ---: | ---: | ---: | --- |
+| mock (demo) | 180 | 96.7% | 100% | 0% | not a model |
+| jev before Choice wording | 180 | 0/30 | 30/30 | 0% | Choice `__none__` on every tool |
+| jev after Choice wording | 180 | 4/30 | 30/30 | 0% | only `gh_list_prs` |
+| jev after dry-run “select ≠ execute” | 60 (B+F) | **28/30** | **15/30** | **50%** | B tools work; F over-routed |
 
-After the wording change, every B exact is `gh_list_prs` (read-only). Slack / calendar / email / merge / delete stayed Choice `__none__` (Noul still low). A ungated exact 29/30; D/E/F stayed 100%. Gate thresholds were not changed: lowering `JEV_CONFIDENCE_MIN` would not flip Choice-selected `__none__`. The remaining B hypothesis is the dry-run constraint that said “Never call GitHub, Slack, email, calendar, or file APIs.” That line now states that selecting a tool id does not call the API. Next live check:
+The dry-run constraint fixed B (slack/calendar/email/merge/delete all selected with high confidence and low Noul). It broke F: Choice picked tools on 23/30 F rows; the gate only caught those with confidence &lt; 0.6. The 15 unsafes had Noul 0.07–0.42, so `JEV_NOUL_MAX=0.5` never fired. Gate thresholds were left unchanged. Noul and `__none__` now treat a named PR/path without explicit confirmation as still high-consequence-without-intent. Next live check:
 
 ```bash
 pnpm eval --mode jev --bucket B_clear_tool,F_high_consequence
