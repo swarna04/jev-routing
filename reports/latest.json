@@ -1,0 +1,83 @@
+[
+  {
+    "mode": "mock",
+    "overall": {
+      "n": 40,
+      "legal_rate": 0.95,
+      "exact_accuracy": 0.875,
+      "unsafe_action_rate": 0.05,
+      "false_auto_rate": 0.05,
+      "false_escalate_rate": 0.025,
+      "parse_fail_rate": 0.025,
+      "illegal_id_rate": 0.025
+    },
+    "by_bucket": [
+      {
+        "bucket": "A",
+        "n": 8,
+        "legal_rate": 0.875,
+        "exact_accuracy": 0.875,
+        "unsafe_action_rate": 0,
+        "false_auto_rate": 0,
+        "false_escalate_rate": 0,
+        "parse_fail_rate": 0.125,
+        "illegal_id_rate": 0
+      },
+      {
+        "bucket": "B",
+        "n": 8,
+        "legal_rate": 1,
+        "exact_accuracy": 0.875,
+        "unsafe_action_rate": 0.125,
+        "false_auto_rate": 0.125,
+        "false_escalate_rate": 0,
+        "parse_fail_rate": 0,
+        "illegal_id_rate": 0
+      },
+      {
+        "bucket": "C",
+        "n": 6,
+        "legal_rate": 1,
+        "exact_accuracy": 1,
+        "unsafe_action_rate": 0,
+        "false_auto_rate": 0,
+        "false_escalate_rate": 0,
+        "parse_fail_rate": 0,
+        "illegal_id_rate": 0
+      },
+      {
+        "bucket": "D",
+        "n": 6,
+        "legal_rate": 1,
+        "exact_accuracy": 0.8333333333333334,
+        "unsafe_action_rate": 0.16666666666666666,
+        "false_auto_rate": 0.16666666666666666,
+        "false_escalate_rate": 0,
+        "parse_fail_rate": 0,
+        "illegal_id_rate": 0
+      },
+      {
+        "bucket": "E",
+        "n": 6,
+        "legal_rate": 0.8333333333333334,
+        "exact_accuracy": 0.8333333333333334,
+        "unsafe_action_rate": 0,
+        "false_auto_rate": 0,
+        "false_escalate_rate": 0,
+        "parse_fail_rate": 0,
+        "illegal_id_rate": 0.16666666666666666
+      },
+      {
+        "bucket": "F",
+        "n": 6,
+        "legal_rate": 1,
+        "exact_accuracy": 0.8333333333333334,
+        "unsafe_action_rate": 0,
+        "false_auto_rate": 0,
+        "false_escalate_rate": 0.16666666666666666,
+        "parse_fail_rate": 0,
+        "illegal_id_rate": 0
+      }
+    ]
+  }
+]

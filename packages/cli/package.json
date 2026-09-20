@@ -1,0 +1,22 @@
+{
+  "name": "@jev-routing/cli",
+  "private": true,
+  "type": "module",
+  "bin": {
+    "jev-routing": "./src/cli.ts"
+  },
+  "scripts": {
+    "eval": "tsx src/cli.ts",
+    "typecheck": "tsc -p tsconfig.json --noEmit"
+  },
+  "dependencies": {
+    "@jev-routing/eval": "workspace:*",
+    "@jev-routing/routers": "workspace:*",
+    "@jev-routing/schema": "workspace:*",
+    "dotenv": "^16.6.1"
+  },
+  "devDependencies": {
+    "tsx": "^4.20.5",
+    "typescript": "^5.9.2"
+  }
+}

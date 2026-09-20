@@ -1,0 +1,44 @@
+[
+  {
+    "id": "gh_create_issue",
+    "label": "Create GitHub issue",
+    "description": "Open a new GitHub issue. Routing dry-run only; never call GitHub.",
+    "high_consequence": false
+  },
+  {
+    "id": "gh_comment",
+    "label": "Comment on GitHub issue",
+    "description": "Add a comment on an existing GitHub issue. Routing dry-run only; never call GitHub.",
+    "high_consequence": false
+  },
+  {
+    "id": "slack_post",
+    "label": "Post to Slack",
+    "description": "Post a message to a Slack channel. Routing dry-run only; never call Slack.",
+    "high_consequence": false
+  },
+  {
+    "id": "email_send",
+    "label": "Send email",
+    "description": "Send an email. Routing dry-run only; never call an email API. High consequence when recipients or content are unclear.",
+    "high_consequence": true
+  },
+  {
+    "id": "calendar_create",
+    "label": "Create calendar event",
+    "description": "Create a calendar event. Routing dry-run only; never call a calendar API.",
+    "high_consequence": false
+  },
+  {
+    "id": "file_read",
+    "label": "Read a file",
+    "description": "Read a local file. Routing dry-run only; never open protected files.",
+    "high_consequence": false
+  },
+  {
+    "id": "file_delete",
+    "label": "Delete a file",
+    "description": "Delete a local file. High consequence. Routing dry-run only; never delete files.",
+    "high_consequence": true
+  }
+]
