@@ -1,15 +1,19 @@
+import { dirname, join } from "node:path";
+import { fileURLToPath } from "node:url";
 import { describe, expect, it } from "vitest";
-import { NONE_ID, buildToy } from "@jev-routing/schema";
+import { NONE_ID, loadToyFromJsonl } from "@jev-routing/schema";
 import { mockPrediction } from "./mock.ts";
 import { parseBareHop } from "./parse.ts";
 
+const jsonl = join(dirname(fileURLToPath(import.meta.url)), "../../../fixtures/routing-toy.jsonl");
+
 describe("parseBareHop", () => {
-  const fixture = buildToy()[0]!;
+  const fixture = loadToyFromJsonl(jsonl)[0]!;
 
   it("reads a raw id, JSON, and labeled text", () => {
-    expect(parseBareHop("gh_create_issue", fixture)).toBe("gh_create_issue");
+    expect(parseBareHop("research", fixture)).toBe("research");
     expect(parseBareHop('{"next_hop":"slack_post"}', fixture)).toBe("slack_post");
-    expect(parseBareHop("next hop: file_read", fixture)).toBe("file_read");
+    expect(parseBareHop("next hop: gh_list_prs", fixture)).toBe("gh_list_prs");
     expect(parseBareHop("none", fixture)).toBe(NONE_ID);
   });
 
@@ -24,11 +28,11 @@ describe("parseBareHop", () => {
 });
 
 describe("mock router scripts", () => {
-  const fixtures = buildToy();
+  const fixtures = loadToyFromJsonl(jsonl);
 
-  it("gold is exact on all 40", () => {
+  it("gold is exact on all 180", () => {
     for (const fixture of fixtures) {
-      expect(mockPrediction(fixture, "gold").next_hop).toBe(fixture.gold_next_hop);
+      expect(mockPrediction(fixture, "gold").next_hop).toBe(fixture.gold_route);
     }
   });
 
@@ -40,6 +44,6 @@ describe("mock router scripts", () => {
     expect(byId.E01?.illegal_id).toBe(true);
     expect(byId.B01?.next_hop).toBe("slack_post");
     expect(byId.D01?.next_hop).toBe("file_delete");
-    expect(byId.F01?.next_hop).toBe(NONE_ID);
+    expect(byId.A01?.next_hop).toBe(NONE_ID);
   });
 });

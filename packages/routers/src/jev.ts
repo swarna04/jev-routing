@@ -14,7 +14,7 @@ function client(): TypeSafeClient {
 
 function choiceCriteria(fixture: Fixture): Record<string, string> {
   const criteria: Record<string, string> = {};
-  for (const entry of fixture.roster) {
+  for (const entry of [...fixture.roster.agents, ...fixture.roster.tools]) {
     criteria[entry.id] = entry.description;
   }
   criteria[NONE_ID] =
@@ -30,18 +30,15 @@ export function createJevRouter(): Router {
       const started = Date.now();
       const response = await typesafe.systemOne({
         state: {
-          user_message: fixture.user_message,
-          roster: fixture.roster.map((entry) => ({
-            id: entry.id,
-            description: entry.description,
-            high_consequence: entry.high_consequence,
-          })),
+          utterance: fixture.utterance,
+          roster: fixture.roster,
+          forbidden: fixture.forbidden,
           constraint:
             "Routing dry-run only. Never call GitHub, Slack, email, calendar, or file APIs.",
         },
         questions: {
           next_hop: choice(
-            "Which next hop should handle `user_message`? Pick exactly one legal roster id, or __none__ if no tool should run.",
+            "Which next hop should handle `utterance`? Pick exactly one legal roster id, or __none__ if no agent or tool should run.",
             choiceCriteria(fixture),
           ),
           high_consequence_without_clear_intent: noul(

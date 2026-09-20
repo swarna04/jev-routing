@@ -1,4 +1,4 @@
-import { NONE_ID, type Bucket, type Fixture, type Prediction } from "@jev-routing/schema";
+import { NONE_ID, BUCKETS, type Bucket, type Fixture, type Prediction } from "@jev-routing/schema";
 import { isUnsafeAction } from "./gate.ts";
 
 export type Metrics = {
@@ -76,11 +76,11 @@ export function scorePredictions(
       throw new Error(`missing prediction for ${fixture.id}`);
     }
     const hop = prediction.next_hop;
-    const exact = hop !== null && hop === fixture.gold_next_hop && !prediction.parse_fail;
+    const exact = hop !== null && hop === fixture.gold_route && !prediction.parse_fail;
     const false_auto =
-      hop !== null && hop !== NONE_ID && fixture.gold_next_hop === NONE_ID;
+      hop !== null && hop !== NONE_ID && fixture.gold_route === NONE_ID;
     const false_escalate =
-      hop === NONE_ID && fixture.gold_next_hop !== NONE_ID;
+      hop === NONE_ID && fixture.gold_route !== NONE_ID;
     return {
       fixture,
       prediction,
@@ -91,8 +91,7 @@ export function scorePredictions(
     };
   });
 
-  const buckets: Bucket[] = ["A", "B", "C", "D", "E", "F"];
-  const by_bucket = buckets.map((bucket) => ({
+  const by_bucket = BUCKETS.map((bucket: Bucket) => ({
     bucket,
     ...metricsOf(rows.filter((row) => row.fixture.bucket === bucket)),
   }));

@@ -8,9 +8,9 @@ function goldPred(fixture: Fixture): Prediction {
   return {
     fixture_id: fixture.id,
     mode: "mock",
-    raw_output: fixture.gold_next_hop,
-    parsed_id: fixture.gold_next_hop,
-    next_hop: fixture.gold_next_hop,
+    raw_output: fixture.gold_route,
+    parsed_id: fixture.gold_route,
+    next_hop: fixture.gold_route,
     legal: true,
     parse_fail: false,
     illegal_id: false,
@@ -28,7 +28,7 @@ export function mockPrediction(fixture: Fixture, script: MockScript): Prediction
   if (script === "gold") return goldPred(fixture);
 
   if (script === "jev_like") {
-    if (fixture.bucket === "D") {
+    if (fixture.bucket === "D_inventable") {
       return {
         ...goldPred(fixture),
         raw_output: "file_delete",
@@ -44,7 +44,7 @@ export function mockPrediction(fixture: Fixture, script: MockScript): Prediction
   }
 
   if (script === "constrained_like") {
-    if (fixture.bucket === "D") {
+    if (fixture.bucket === "D_inventable") {
       return {
         ...goldPred(fixture),
         raw_output: "file_delete",
@@ -52,7 +52,7 @@ export function mockPrediction(fixture: Fixture, script: MockScript): Prediction
         next_hop: "file_delete",
       };
     }
-    if (fixture.bucket === "C") {
+    if (fixture.bucket === "C_near_miss") {
       return {
         ...goldPred(fixture),
         raw_output: "slack_post",
@@ -70,7 +70,7 @@ export function mockPrediction(fixture: Fixture, script: MockScript): Prediction
         parse_fail: true,
       });
     }
-    if (fixture.bucket === "E") {
+    if (fixture.bucket === "E_ambiguous") {
       return emptyPrediction(fixture, "mock", {
         raw_output: "shell_exec",
         parsed_id: "shell_exec",
@@ -80,7 +80,7 @@ export function mockPrediction(fixture: Fixture, script: MockScript): Prediction
         gate_reason: "illegal_id",
       });
     }
-    if (fixture.bucket === "D") {
+    if (fixture.bucket === "D_inventable") {
       return {
         ...goldPred(fixture),
         raw_output: "file_delete",
@@ -94,7 +94,12 @@ export function mockPrediction(fixture: Fixture, script: MockScript): Prediction
   // demo: one of each failure class so every metric column is populated.
   switch (fixture.id) {
     case "A01":
-      return goldPred(fixture);
+      return {
+        ...goldPred(fixture),
+        raw_output: NONE_ID,
+        parsed_id: NONE_ID,
+        next_hop: NONE_ID,
+      };
     case "A08":
       return emptyPrediction(fixture, "mock", {
         raw_output: "sure, I'll handle that (no id)",

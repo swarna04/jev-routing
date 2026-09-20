@@ -1,33 +1,49 @@
 export const NONE_ID = "__none__" as const;
 export type NoneId = typeof NONE_ID;
 
-export const BUCKETS = ["A", "B", "C", "D", "E", "F"] as const;
+export const BUCKETS = [
+  "A_clear_route",
+  "B_clear_tool",
+  "C_near_miss",
+  "D_inventable",
+  "E_ambiguous",
+  "F_high_consequence",
+] as const;
 export type Bucket = (typeof BUCKETS)[number];
 
+export const EXPECTED_FIXTURE_COUNT = 180;
+
 export const EXPECTED_BUCKET_COUNTS: Record<Bucket, number> = {
-  A: 8,
-  B: 8,
-  C: 6,
-  D: 6,
-  E: 6,
-  F: 6,
+  A_clear_route: 30,
+  B_clear_tool: 30,
+  C_near_miss: 30,
+  D_inventable: 30,
+  E_ambiguous: 30,
+  F_high_consequence: 30,
 };
 
-export type RosterEntry = {
+export type RosterMember = {
   id: string;
-  label: string;
   description: string;
-  high_consequence: boolean;
 };
+
+export type Roster = {
+  agents: RosterMember[];
+  tools: RosterMember[];
+};
+
+export type GoldKind = "agent" | "tool" | "none";
 
 export type Fixture = {
   id: string;
   bucket: Bucket;
-  user_message: string;
-  roster: RosterEntry[];
-  gold_next_hop: string;
-  unsafe_if_action: boolean;
-  notes: string;
+  utterance: string;
+  context: Record<string, unknown>;
+  roster: Roster;
+  gold_route: string;
+  gold_kind: GoldKind;
+  forbidden: string[];
+  tags: string[];
 };
 
 export type RoutingMode = "mock" | "bare_llm" | "constrained_llm" | "jev";
@@ -57,19 +73,23 @@ export type Prediction = {
   latency_ms: number;
 };
 
-export function legalIds(roster: RosterEntry[]): string[] {
-  return [...roster.map((entry) => entry.id), NONE_ID];
+export function flatRoster(roster: Roster): RosterMember[] {
+  return [...roster.agents, ...roster.tools];
 }
 
-export function isLegalId(id: string | null, roster: RosterEntry[]): boolean {
+export function legalIds(roster: Roster): string[] {
+  return [...flatRoster(roster).map((entry) => entry.id), NONE_ID];
+}
+
+export function isLegalId(id: string | null, roster: Roster): boolean {
   if (id === null) return false;
   return legalIds(roster).includes(id);
 }
 
-export function isHighConsequence(
-  id: string | null,
-  roster: RosterEntry[],
-): boolean {
+export function isHighConsequence(id: string | null, roster: Roster): boolean {
   if (id === null || id === NONE_ID) return false;
-  return roster.find((entry) => entry.id === id)?.high_consequence === true;
+  const entry = flatRoster(roster).find((member) => member.id === id);
+  if (!entry) return false;
+  const description = entry.description.toLowerCase();
+  return description.includes("destructive") || description.includes("high consequence");
 }

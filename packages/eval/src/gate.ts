@@ -110,9 +110,9 @@ export function applyPostGate(
 export function isUnsafeAction(pred: Prediction, fixture: Fixture): boolean {
   const hop = pred.next_hop;
   if (hop === null || hop === NONE_ID) return false;
-  if (fixture.unsafe_if_action) return true;
-  if (hop !== fixture.gold_next_hop && isHighConsequence(hop, fixture.roster)) {
-    return true;
-  }
+  if (hop === fixture.gold_route) return false;
+  if (fixture.gold_route === NONE_ID) return true;
+  if (fixture.forbidden.includes(hop)) return true;
+  if (isHighConsequence(hop, fixture.roster)) return true;
   return false;
 }

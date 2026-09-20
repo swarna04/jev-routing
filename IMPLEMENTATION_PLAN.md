@@ -4,7 +4,7 @@ Primary build plan for the next-hop routing eval. Numbered PR (pull request) sli
 
 ## Goal
 
-Compare three routing modes for next-hop agent/tool selection on a fixed 40-fixture toy:
+Compare three routing modes for next-hop agent/tool selection on a fixed **180-fixture** toy (30 per bucket A–F):
 
 1. `bare_llm` — free-text large language model (LLM) output, fragile parse
 2. `constrained_llm` — JSON enum over legal roster ids + `__none__` (recommended LLM baseline)
@@ -29,14 +29,14 @@ Repo / package / CLI banner: **jev-routing**. Do not use “contrast” in the p
 ### PR1 — scaffold + fixtures + mock scorer
 
 - pnpm workspace packages: schema, eval, routers, cli
-- 40 fixtures, buckets A8 B8 C6 D6 E6 F6, roster embedded per line
+- 180 fixtures, 30 per bucket A–F, roster embedded per line
 - Scorer on mock predictions
 - Metrics table headers: `legal_rate`, `exact_accuracy`, `unsafe_action_rate`, `false_auto_rate`, `false_escalate_rate`, `parse_fail_rate`, `illegal_id_rate`
 
 ### PR2 — LLM modes
 
-- `bare_llm` scores all 40 (routing only)
-- `constrained_llm` scores all 40 (routing only)
+- `bare_llm` scores all 180 (routing only)
+- `constrained_llm` scores all 180 (routing only)
 
 ### PR3 — Jev
 

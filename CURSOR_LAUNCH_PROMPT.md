@@ -1,6 +1,6 @@
 # Cursor launch prompt — jev-routing
 
-Build and eval next-hop routing on the frozen 40-fixture toy.
+Build and eval next-hop routing on the frozen **180-fixture** toy (30 per bucket A–F).
 
 ## Name
 

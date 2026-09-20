@@ -1,6 +1,12 @@
 import { describe, expect, it } from "vitest";
-import { NONE_ID, ROSTER, buildToy, type Prediction } from "@jev-routing/schema";
+import {
+  EXPECTED_FIXTURE_COUNT,
+  NONE_ID,
+  ROSTER,
+  type Prediction,
+} from "@jev-routing/schema";
 import { applyPostGate } from "./gate.ts";
+import { loadDefaultFixtures } from "./load.ts";
 import { METRIC_HEADERS, scorePredictions } from "./score.ts";
 import { formatMetricsTable } from "./report.ts";
 
@@ -9,7 +15,7 @@ function pred(
   nextHop: string | null,
   extras: Partial<Prediction> = {},
 ): Prediction {
-    const parseFail = extras.parse_fail ?? (nextHop === null && extras.illegal_id !== true);
+  const parseFail = extras.parse_fail ?? (nextHop === null && extras.illegal_id !== true);
   const illegal = extras.illegal_id ?? false;
   return {
     fixture_id: fixtureId,
@@ -28,7 +34,7 @@ function pred(
 }
 
 describe("scorer", () => {
-  const fixtures = buildToy();
+  const fixtures = loadDefaultFixtures();
 
   it("exposes the required metric table headers", () => {
     expect(METRIC_HEADERS).toEqual([
@@ -42,13 +48,13 @@ describe("scorer", () => {
       "parse_fail_rate",
       "illegal_id_rate",
     ]);
-    const gold = fixtures.map((fixture) => pred(fixture.id, fixture.gold_next_hop));
+    const gold = fixtures.map((fixture) => pred(fixture.id, fixture.gold_route));
     const card = scorePredictions(fixtures, gold, "mock:gold");
     const table = formatMetricsTable([card]);
     for (const header of METRIC_HEADERS) {
       expect(table).toContain(header);
     }
-    expect(card.overall.n).toBe(40);
+    expect(card.overall.n).toBe(EXPECTED_FIXTURE_COUNT);
     expect(card.overall.exact_accuracy).toBe(1);
     expect(card.overall.unsafe_action_rate).toBe(0);
     expect(card.overall.parse_fail_rate).toBe(0);
@@ -58,9 +64,7 @@ describe("scorer", () => {
   it("counts parse fails, illegal ids, false auto, and unsafe actions", () => {
     const predictions = fixtures.map((fixture) => {
       if (fixture.id === "A01") return pred(fixture.id, null, { parse_fail: true, gate_reason: "parse_fail" });
-      if (fixture.id === "B01") {
-        return pred(fixture.id, "slack_post");
-      }
+      if (fixture.id === "D01") return pred(fixture.id, "slack_post");
       if (fixture.id === "E01") {
         return pred(fixture.id, null, {
           parsed_id: "shell_exec",
@@ -69,16 +73,16 @@ describe("scorer", () => {
           gate_reason: "illegal_id",
         });
       }
-      if (fixture.id === "F01") return pred(fixture.id, NONE_ID);
-      return pred(fixture.id, fixture.gold_next_hop);
+      if (fixture.id === "C01") return pred(fixture.id, NONE_ID);
+      return pred(fixture.id, fixture.gold_route);
     });
     const card = scorePredictions(fixtures, predictions, "mock:mixed");
-    expect(card.overall.parse_fail_rate).toBeCloseTo(1 / 40);
-    expect(card.overall.illegal_id_rate).toBeCloseTo(1 / 40);
-    expect(card.overall.false_auto_rate).toBeCloseTo(1 / 40);
-    expect(card.overall.false_escalate_rate).toBeCloseTo(1 / 40);
-    expect(card.overall.unsafe_action_rate).toBeCloseTo(1 / 40);
-    expect(card.overall.exact_accuracy).toBeCloseTo(36 / 40);
+    expect(card.overall.parse_fail_rate).toBeCloseTo(1 / EXPECTED_FIXTURE_COUNT);
+    expect(card.overall.illegal_id_rate).toBeCloseTo(1 / EXPECTED_FIXTURE_COUNT);
+    expect(card.overall.false_auto_rate).toBeCloseTo(1 / EXPECTED_FIXTURE_COUNT);
+    expect(card.overall.false_escalate_rate).toBeCloseTo(1 / EXPECTED_FIXTURE_COUNT);
+    expect(card.overall.unsafe_action_rate).toBeCloseTo(1 / EXPECTED_FIXTURE_COUNT);
+    expect(card.overall.exact_accuracy).toBeCloseTo(176 / EXPECTED_FIXTURE_COUNT);
   });
 });
 

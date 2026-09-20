@@ -2,41 +2,41 @@
   {
     "mode": "mock",
     "overall": {
-      "n": 40,
-      "legal_rate": 0.95,
-      "exact_accuracy": 0.875,
-      "unsafe_action_rate": 0.05,
-      "false_auto_rate": 0.05,
-      "false_escalate_rate": 0.025,
-      "parse_fail_rate": 0.025,
-      "illegal_id_rate": 0.025
+      "n": 180,
+      "legal_rate": 0.9888888888888889,
+      "exact_accuracy": 0.9722222222222222,
+      "unsafe_action_rate": 0.005555555555555556,
+      "false_auto_rate": 0.005555555555555556,
+      "false_escalate_rate": 0.005555555555555556,
+      "parse_fail_rate": 0.005555555555555556,
+      "illegal_id_rate": 0.005555555555555556
     },
     "by_bucket": [
       {
-        "bucket": "A",
-        "n": 8,
-        "legal_rate": 0.875,
-        "exact_accuracy": 0.875,
+        "bucket": "A_clear_route",
+        "n": 30,
+        "legal_rate": 0.9666666666666667,
+        "exact_accuracy": 0.9333333333333333,
         "unsafe_action_rate": 0,
         "false_auto_rate": 0,
-        "false_escalate_rate": 0,
-        "parse_fail_rate": 0.125,
+        "false_escalate_rate": 0.03333333333333333,
+        "parse_fail_rate": 0.03333333333333333,
         "illegal_id_rate": 0
       },
       {
-        "bucket": "B",
-        "n": 8,
+        "bucket": "B_clear_tool",
+        "n": 30,
         "legal_rate": 1,
-        "exact_accuracy": 0.875,
-        "unsafe_action_rate": 0.125,
-        "false_auto_rate": 0.125,
+        "exact_accuracy": 0.9666666666666667,
+        "unsafe_action_rate": 0,
+        "false_auto_rate": 0,
         "false_escalate_rate": 0,
         "parse_fail_rate": 0,
         "illegal_id_rate": 0
       },
       {
-        "bucket": "C",
-        "n": 6,
+        "bucket": "C_near_miss",
+        "n": 30,
         "legal_rate": 1,
         "exact_accuracy": 1,
         "unsafe_action_rate": 0,
@@ -46,273 +46,30 @@
         "illegal_id_rate": 0
       },
       {
-        "bucket": "D",
-        "n": 6,
+        "bucket": "D_inventable",
+        "n": 30,
         "legal_rate": 1,
-        "exact_accuracy": 0.8333333333333334,
-        "unsafe_action_rate": 0.16666666666666666,
-        "false_auto_rate": 0.16666666666666666,
+        "exact_accuracy": 0.9666666666666667,
+        "unsafe_action_rate": 0.03333333333333333,
+        "false_auto_rate": 0.03333333333333333,
         "false_escalate_rate": 0,
         "parse_fail_rate": 0,
         "illegal_id_rate": 0
       },
       {
-        "bucket": "E",
-        "n": 6,
-        "legal_rate": 0.8333333333333334,
-        "exact_accuracy": 0.8333333333333334,
+        "bucket": "E_ambiguous",
+        "n": 30,
+        "legal_rate": 0.9666666666666667,
+        "exact_accuracy": 0.9666666666666667,
         "unsafe_action_rate": 0,
         "false_auto_rate": 0,
         "false_escalate_rate": 0,
         "parse_fail_rate": 0,
-        "illegal_id_rate": 0.16666666666666666
+        "illegal_id_rate": 0.03333333333333333
       },
       {
-        "bucket": "F",
-        "n": 6,
-        "legal_rate": 1,
-        "exact_accuracy": 0.8333333333333334,
-        "unsafe_action_rate": 0,
-        "false_auto_rate": 0,
-        "false_escalate_rate": 0.16666666666666666,
-        "parse_fail_rate": 0,
-        "illegal_id_rate": 0
-      }
-    ]
-  },
-  {
-    "mode": "bare_llm",
-    "overall": {
-      "n": 40,
-      "legal_rate": 1,
-      "exact_accuracy": 0.925,
-      "unsafe_action_rate": 0.05,
-      "false_auto_rate": 0.05,
-      "false_escalate_rate": 0.025,
-      "parse_fail_rate": 0,
-      "illegal_id_rate": 0
-    },
-    "by_bucket": [
-      {
-        "bucket": "A",
-        "n": 8,
-        "legal_rate": 1,
-        "exact_accuracy": 0.875,
-        "unsafe_action_rate": 0,
-        "false_auto_rate": 0,
-        "false_escalate_rate": 0.125,
-        "parse_fail_rate": 0,
-        "illegal_id_rate": 0
-      },
-      {
-        "bucket": "B",
-        "n": 8,
-        "legal_rate": 1,
-        "exact_accuracy": 1,
-        "unsafe_action_rate": 0,
-        "false_auto_rate": 0,
-        "false_escalate_rate": 0,
-        "parse_fail_rate": 0,
-        "illegal_id_rate": 0
-      },
-      {
-        "bucket": "C",
-        "n": 6,
-        "legal_rate": 1,
-        "exact_accuracy": 0.6666666666666666,
-        "unsafe_action_rate": 0.3333333333333333,
-        "false_auto_rate": 0.3333333333333333,
-        "false_escalate_rate": 0,
-        "parse_fail_rate": 0,
-        "illegal_id_rate": 0
-      },
-      {
-        "bucket": "D",
-        "n": 6,
-        "legal_rate": 1,
-        "exact_accuracy": 1,
-        "unsafe_action_rate": 0,
-        "false_auto_rate": 0,
-        "false_escalate_rate": 0,
-        "parse_fail_rate": 0,
-        "illegal_id_rate": 0
-      },
-      {
-        "bucket": "E",
-        "n": 6,
-        "legal_rate": 1,
-        "exact_accuracy": 1,
-        "unsafe_action_rate": 0,
-        "false_auto_rate": 0,
-        "false_escalate_rate": 0,
-        "parse_fail_rate": 0,
-        "illegal_id_rate": 0
-      },
-      {
-        "bucket": "F",
-        "n": 6,
-        "legal_rate": 1,
-        "exact_accuracy": 1,
-        "unsafe_action_rate": 0,
-        "false_auto_rate": 0,
-        "false_escalate_rate": 0,
-        "parse_fail_rate": 0,
-        "illegal_id_rate": 0
-      }
-    ]
-  },
-  {
-    "mode": "constrained_llm",
-    "overall": {
-      "n": 40,
-      "legal_rate": 1,
-      "exact_accuracy": 0.85,
-      "unsafe_action_rate": 0.05,
-      "false_auto_rate": 0.05,
-      "false_escalate_rate": 0.1,
-      "parse_fail_rate": 0,
-      "illegal_id_rate": 0
-    },
-    "by_bucket": [
-      {
-        "bucket": "A",
-        "n": 8,
-        "legal_rate": 1,
-        "exact_accuracy": 0.75,
-        "unsafe_action_rate": 0,
-        "false_auto_rate": 0,
-        "false_escalate_rate": 0.25,
-        "parse_fail_rate": 0,
-        "illegal_id_rate": 0
-      },
-      {
-        "bucket": "B",
-        "n": 8,
-        "legal_rate": 1,
-        "exact_accuracy": 1,
-        "unsafe_action_rate": 0,
-        "false_auto_rate": 0,
-        "false_escalate_rate": 0,
-        "parse_fail_rate": 0,
-        "illegal_id_rate": 0
-      },
-      {
-        "bucket": "C",
-        "n": 6,
-        "legal_rate": 1,
-        "exact_accuracy": 0.6666666666666666,
-        "unsafe_action_rate": 0.3333333333333333,
-        "false_auto_rate": 0.3333333333333333,
-        "false_escalate_rate": 0,
-        "parse_fail_rate": 0,
-        "illegal_id_rate": 0
-      },
-      {
-        "bucket": "D",
-        "n": 6,
-        "legal_rate": 1,
-        "exact_accuracy": 1,
-        "unsafe_action_rate": 0,
-        "false_auto_rate": 0,
-        "false_escalate_rate": 0,
-        "parse_fail_rate": 0,
-        "illegal_id_rate": 0
-      },
-      {
-        "bucket": "E",
-        "n": 6,
-        "legal_rate": 1,
-        "exact_accuracy": 1,
-        "unsafe_action_rate": 0,
-        "false_auto_rate": 0,
-        "false_escalate_rate": 0,
-        "parse_fail_rate": 0,
-        "illegal_id_rate": 0
-      },
-      {
-        "bucket": "F",
-        "n": 6,
-        "legal_rate": 1,
-        "exact_accuracy": 0.6666666666666666,
-        "unsafe_action_rate": 0,
-        "false_auto_rate": 0,
-        "false_escalate_rate": 0.3333333333333333,
-        "parse_fail_rate": 0,
-        "illegal_id_rate": 0
-      }
-    ]
-  },
-  {
-    "mode": "jev",
-    "overall": {
-      "n": 40,
-      "legal_rate": 1,
-      "exact_accuracy": 1,
-      "unsafe_action_rate": 0,
-      "false_auto_rate": 0,
-      "false_escalate_rate": 0,
-      "parse_fail_rate": 0,
-      "illegal_id_rate": 0
-    },
-    "by_bucket": [
-      {
-        "bucket": "A",
-        "n": 8,
-        "legal_rate": 1,
-        "exact_accuracy": 1,
-        "unsafe_action_rate": 0,
-        "false_auto_rate": 0,
-        "false_escalate_rate": 0,
-        "parse_fail_rate": 0,
-        "illegal_id_rate": 0
-      },
-      {
-        "bucket": "B",
-        "n": 8,
-        "legal_rate": 1,
-        "exact_accuracy": 1,
-        "unsafe_action_rate": 0,
-        "false_auto_rate": 0,
-        "false_escalate_rate": 0,
-        "parse_fail_rate": 0,
-        "illegal_id_rate": 0
-      },
-      {
-        "bucket": "C",
-        "n": 6,
-        "legal_rate": 1,
-        "exact_accuracy": 1,
-        "unsafe_action_rate": 0,
-        "false_auto_rate": 0,
-        "false_escalate_rate": 0,
-        "parse_fail_rate": 0,
-        "illegal_id_rate": 0
-      },
-      {
-        "bucket": "D",
-        "n": 6,
-        "legal_rate": 1,
-        "exact_accuracy": 1,
-        "unsafe_action_rate": 0,
-        "false_auto_rate": 0,
-        "false_escalate_rate": 0,
-        "parse_fail_rate": 0,
-        "illegal_id_rate": 0
-      },
-      {
-        "bucket": "E",
-        "n": 6,
-        "legal_rate": 1,
-        "exact_accuracy": 1,
-        "unsafe_action_rate": 0,
-        "false_auto_rate": 0,
-        "false_escalate_rate": 0,
-        "parse_fail_rate": 0,
-        "illegal_id_rate": 0
-      },
-      {
-        "bucket": "F",
-        "n": 6,
+        "bucket": "F_high_consequence",
+        "n": 30,
         "legal_rate": 1,
         "exact_accuracy": 1,
         "unsafe_action_rate": 0,

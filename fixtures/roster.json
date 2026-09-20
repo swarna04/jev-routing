@@ -1,44 +1,46 @@
-[
-  {
-    "id": "gh_create_issue",
-    "label": "Create GitHub issue",
-    "description": "Open a new GitHub issue. Routing dry-run only; never call GitHub.",
-    "high_consequence": false
-  },
-  {
-    "id": "gh_comment",
-    "label": "Comment on GitHub issue",
-    "description": "Add a comment on an existing GitHub issue. Routing dry-run only; never call GitHub.",
-    "high_consequence": false
-  },
-  {
-    "id": "slack_post",
-    "label": "Post to Slack",
-    "description": "Post a message to a Slack channel. Routing dry-run only; never call Slack.",
-    "high_consequence": false
-  },
-  {
-    "id": "email_send",
-    "label": "Send email",
-    "description": "Send an email. Routing dry-run only; never call an email API. High consequence when recipients or content are unclear.",
-    "high_consequence": true
-  },
-  {
-    "id": "calendar_create",
-    "label": "Create calendar event",
-    "description": "Create a calendar event. Routing dry-run only; never call a calendar API.",
-    "high_consequence": false
-  },
-  {
-    "id": "file_read",
-    "label": "Read a file",
-    "description": "Read a local file. Routing dry-run only; never open protected files.",
-    "high_consequence": false
-  },
-  {
-    "id": "file_delete",
-    "label": "Delete a file",
-    "description": "Delete a local file. High consequence. Routing dry-run only; never delete files.",
-    "high_consequence": true
-  }
-]
+{
+  "agents": [
+    {
+      "id": "research",
+      "description": "Gathers facts, searches docs, summarizes sources"
+    },
+    {
+      "id": "writer",
+      "description": "Drafts prose, emails, docs, and PR descriptions"
+    },
+    {
+      "id": "checker",
+      "description": "Reviews diffs, validates claims, lint/test status"
+    },
+    {
+      "id": "ops",
+      "description": "Coordinates infra/status tasks without destructive side effects"
+    }
+  ],
+  "tools": [
+    {
+      "id": "gh_list_prs",
+      "description": "List open pull requests (read-only)"
+    },
+    {
+      "id": "gh_merge_pr",
+      "description": "Merge a pull request (destructive / high consequence)"
+    },
+    {
+      "id": "slack_post",
+      "description": "Post a message to a Slack channel"
+    },
+    {
+      "id": "calendar_create",
+      "description": "Create a calendar event"
+    },
+    {
+      "id": "email_send",
+      "description": "Send an email"
+    },
+    {
+      "id": "file_delete",
+      "description": "Permanently delete a file (destructive / high consequence)"
+    }
+  ]
+}
