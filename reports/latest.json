@@ -79,5 +79,248 @@
         "illegal_id_rate": 0
       }
     ]
+  },
+  {
+    "mode": "bare_llm",
+    "overall": {
+      "n": 40,
+      "legal_rate": 1,
+      "exact_accuracy": 0.925,
+      "unsafe_action_rate": 0.05,
+      "false_auto_rate": 0.05,
+      "false_escalate_rate": 0.025,
+      "parse_fail_rate": 0,
+      "illegal_id_rate": 0
+    },
+    "by_bucket": [
+      {
+        "bucket": "A",
+        "n": 8,
+        "legal_rate": 1,
+        "exact_accuracy": 0.875,
+        "unsafe_action_rate": 0,
+        "false_auto_rate": 0,
+        "false_escalate_rate": 0.125,
+        "parse_fail_rate": 0,
+        "illegal_id_rate": 0
+      },
+      {
+        "bucket": "B",
+        "n": 8,
+        "legal_rate": 1,
+        "exact_accuracy": 1,
+        "unsafe_action_rate": 0,
+        "false_auto_rate": 0,
+        "false_escalate_rate": 0,
+        "parse_fail_rate": 0,
+        "illegal_id_rate": 0
+      },
+      {
+        "bucket": "C",
+        "n": 6,
+        "legal_rate": 1,
+        "exact_accuracy": 0.6666666666666666,
+        "unsafe_action_rate": 0.3333333333333333,
+        "false_auto_rate": 0.3333333333333333,
+        "false_escalate_rate": 0,
+        "parse_fail_rate": 0,
+        "illegal_id_rate": 0
+      },
+      {
+        "bucket": "D",
+        "n": 6,
+        "legal_rate": 1,
+        "exact_accuracy": 1,
+        "unsafe_action_rate": 0,
+        "false_auto_rate": 0,
+        "false_escalate_rate": 0,
+        "parse_fail_rate": 0,
+        "illegal_id_rate": 0
+      },
+      {
+        "bucket": "E",
+        "n": 6,
+        "legal_rate": 1,
+        "exact_accuracy": 1,
+        "unsafe_action_rate": 0,
+        "false_auto_rate": 0,
+        "false_escalate_rate": 0,
+        "parse_fail_rate": 0,
+        "illegal_id_rate": 0
+      },
+      {
+        "bucket": "F",
+        "n": 6,
+        "legal_rate": 1,
+        "exact_accuracy": 1,
+        "unsafe_action_rate": 0,
+        "false_auto_rate": 0,
+        "false_escalate_rate": 0,
+        "parse_fail_rate": 0,
+        "illegal_id_rate": 0
+      }
+    ]
+  },
+  {
+    "mode": "constrained_llm",
+    "overall": {
+      "n": 40,
+      "legal_rate": 1,
+      "exact_accuracy": 0.85,
+      "unsafe_action_rate": 0.05,
+      "false_auto_rate": 0.05,
+      "false_escalate_rate": 0.1,
+      "parse_fail_rate": 0,
+      "illegal_id_rate": 0
+    },
+    "by_bucket": [
+      {
+        "bucket": "A",
+        "n": 8,
+        "legal_rate": 1,
+        "exact_accuracy": 0.75,
+        "unsafe_action_rate": 0,
+        "false_auto_rate": 0,
+        "false_escalate_rate": 0.25,
+        "parse_fail_rate": 0,
+        "illegal_id_rate": 0
+      },
+      {
+        "bucket": "B",
+        "n": 8,
+        "legal_rate": 1,
+        "exact_accuracy": 1,
+        "unsafe_action_rate": 0,
+        "false_auto_rate": 0,
+        "false_escalate_rate": 0,
+        "parse_fail_rate": 0,
+        "illegal_id_rate": 0
+      },
+      {
+        "bucket": "C",
+        "n": 6,
+        "legal_rate": 1,
+        "exact_accuracy": 0.6666666666666666,
+        "unsafe_action_rate": 0.3333333333333333,
+        "false_auto_rate": 0.3333333333333333,
+        "false_escalate_rate": 0,
+        "parse_fail_rate": 0,
+        "illegal_id_rate": 0
+      },
+      {
+        "bucket": "D",
+        "n": 6,
+        "legal_rate": 1,
+        "exact_accuracy": 1,
+        "unsafe_action_rate": 0,
+        "false_auto_rate": 0,
+        "false_escalate_rate": 0,
+        "parse_fail_rate": 0,
+        "illegal_id_rate": 0
+      },
+      {
+        "bucket": "E",
+        "n": 6,
+        "legal_rate": 1,
+        "exact_accuracy": 1,
+        "unsafe_action_rate": 0,
+        "false_auto_rate": 0,
+        "false_escalate_rate": 0,
+        "parse_fail_rate": 0,
+        "illegal_id_rate": 0
+      },
+      {
+        "bucket": "F",
+        "n": 6,
+        "legal_rate": 1,
+        "exact_accuracy": 0.6666666666666666,
+        "unsafe_action_rate": 0,
+        "false_auto_rate": 0,
+        "false_escalate_rate": 0.3333333333333333,
+        "parse_fail_rate": 0,
+        "illegal_id_rate": 0
+      }
+    ]
+  },
+  {
+    "mode": "jev",
+    "overall": {
+      "n": 40,
+      "legal_rate": 1,
+      "exact_accuracy": 1,
+      "unsafe_action_rate": 0,
+      "false_auto_rate": 0,
+      "false_escalate_rate": 0,
+      "parse_fail_rate": 0,
+      "illegal_id_rate": 0
+    },
+    "by_bucket": [
+      {
+        "bucket": "A",
+        "n": 8,
+        "legal_rate": 1,
+        "exact_accuracy": 1,
+        "unsafe_action_rate": 0,
+        "false_auto_rate": 0,
+        "false_escalate_rate": 0,
+        "parse_fail_rate": 0,
+        "illegal_id_rate": 0
+      },
+      {
+        "bucket": "B",
+        "n": 8,
+        "legal_rate": 1,
+        "exact_accuracy": 1,
+        "unsafe_action_rate": 0,
+        "false_auto_rate": 0,
+        "false_escalate_rate": 0,
+        "parse_fail_rate": 0,
+        "illegal_id_rate": 0
+      },
+      {
+        "bucket": "C",
+        "n": 6,
+        "legal_rate": 1,
+        "exact_accuracy": 1,
+        "unsafe_action_rate": 0,
+        "false_auto_rate": 0,
+        "false_escalate_rate": 0,
+        "parse_fail_rate": 0,
+        "illegal_id_rate": 0
+      },
+      {
+        "bucket": "D",
+        "n": 6,
+        "legal_rate": 1,
+        "exact_accuracy": 1,
+        "unsafe_action_rate": 0,
+        "false_auto_rate": 0,
+        "false_escalate_rate": 0,
+        "parse_fail_rate": 0,
+        "illegal_id_rate": 0
+      },
+      {
+        "bucket": "E",
+        "n": 6,
+        "legal_rate": 1,
+        "exact_accuracy": 1,
+        "unsafe_action_rate": 0,
+        "false_auto_rate": 0,
+        "false_escalate_rate": 0,
+        "parse_fail_rate": 0,
+        "illegal_id_rate": 0
+      },
+      {
+        "bucket": "F",
+        "n": 6,
+        "legal_rate": 1,
+        "exact_accuracy": 1,
+        "unsafe_action_rate": 0,
+        "false_auto_rate": 0,
+        "false_escalate_rate": 0,
+        "parse_fail_rate": 0,
+        "illegal_id_rate": 0
+      }
+    ]
   }
 ]
