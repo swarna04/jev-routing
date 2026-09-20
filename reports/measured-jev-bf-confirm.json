@@ -1,0 +1,106 @@
+[
+  {
+    "mode": "jev",
+    "overall": {
+      "n": 60,
+      "legal_rate": 1,
+      "exact_accuracy": 0.95,
+      "unsafe_action_rate": 0.016666666666666666,
+      "false_auto_rate": 0.016666666666666666,
+      "false_escalate_rate": 0.03333333333333333,
+      "parse_fail_rate": 0,
+      "illegal_id_rate": 0
+    },
+    "by_bucket": [
+      {
+        "bucket": "A_clear_route",
+        "n": 0,
+        "legal_rate": 0,
+        "exact_accuracy": 0,
+        "unsafe_action_rate": 0,
+        "false_auto_rate": 0,
+        "false_escalate_rate": 0,
+        "parse_fail_rate": 0,
+        "illegal_id_rate": 0
+      },
+      {
+        "bucket": "B_clear_tool",
+        "n": 30,
+        "legal_rate": 1,
+        "exact_accuracy": 0.9333333333333333,
+        "unsafe_action_rate": 0,
+        "false_auto_rate": 0,
+        "false_escalate_rate": 0.06666666666666667,
+        "parse_fail_rate": 0,
+        "illegal_id_rate": 0
+      },
+      {
+        "bucket": "C_near_miss",
+        "n": 0,
+        "legal_rate": 0,
+        "exact_accuracy": 0,
+        "unsafe_action_rate": 0,
+        "false_auto_rate": 0,
+        "false_escalate_rate": 0,
+        "parse_fail_rate": 0,
+        "illegal_id_rate": 0
+      },
+      {
+        "bucket": "D_inventable",
+        "n": 0,
+        "legal_rate": 0,
+        "exact_accuracy": 0,
+        "unsafe_action_rate": 0,
+        "false_auto_rate": 0,
+        "false_escalate_rate": 0,
+        "parse_fail_rate": 0,
+        "illegal_id_rate": 0
+      },
+      {
+        "bucket": "E_ambiguous",
+        "n": 0,
+        "legal_rate": 0,
+        "exact_accuracy": 0,
+        "unsafe_action_rate": 0,
+        "false_auto_rate": 0,
+        "false_escalate_rate": 0,
+        "parse_fail_rate": 0,
+        "illegal_id_rate": 0
+      },
+      {
+        "bucket": "F_high_consequence",
+        "n": 30,
+        "legal_rate": 1,
+        "exact_accuracy": 0.9666666666666667,
+        "unsafe_action_rate": 0.03333333333333333,
+        "false_auto_rate": 0.03333333333333333,
+        "false_escalate_rate": 0,
+        "parse_fail_rate": 0,
+        "illegal_id_rate": 0
+      }
+    ],
+    "debug": {
+      "n": 60,
+      "pre_gate_exact_accuracy": 0.9666666666666667,
+      "outcomes": {
+        "exact": 57,
+        "choice_none": 1,
+        "gate_forced_none": 1,
+        "wrong_hop": 1,
+        "parse_fail": 0,
+        "illegal_id": 0,
+        "other": 0
+      },
+      "false_escalate_split": {
+        "choice_none": 1,
+        "gate_forced_none": 1,
+        "other": 0
+      },
+      "gate_reason": {
+        "pass": 29,
+        "low_confidence": 3,
+        "high_noul": 28
+      }
+    }
+  }
+]

@@ -43,6 +43,7 @@ describe("Jev Choice criteria", () => {
     expect(DRY_RUN_CONSTRAINT).not.toMatch(/Never call GitHub, Slack/i);
     expect(NEXT_HOP_QUESTION).toMatch(/explicitly confirmed/i);
     expect(NOUL_TRUE).toMatch(/named PR, path, or channel without those phrases is still true/i);
+    expect(NOUL_TRUE).toMatch(/executive, board, or recurring/i);
   });
 });
 
