@@ -10,4 +10,5 @@
 - `measured-jev-n180-choice-fix.*` is live Jev after that wording change (still before the dry-run constraint rewrite).
 - `measured-jev-bf-select-not-execute.*` is the B+F slice after treating tool selection as non-execution (B 28/30, F 50% unsafe).
 - `measured-jev-bf-confirm.*` is the B+F slice after Noul required explicit confirmation (B 28/30, F 29/30, 1 unsafe).
+- `measured-jev-n180-post-fix.*` is the full live `--mode jev` n=180 card after the B/F debug (92.8% exact, 0% unsafe).
 - Do not paste fabricated percentages into this folder.
