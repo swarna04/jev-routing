@@ -75,19 +75,18 @@ The command-line interface (CLI) banner is `jev-routing`. Mock scripts (`demo`, 
 
 ## Measured results
 
-See `reports/latest.md` (overwritten by `pnpm eval`). Numbers below are from a **mock scorer** run (`--mode mock --script demo`) that injects known parse fails, illegal ids, and unsafe autos so every metric column is populated. They are **not** large language model or Jev measurements.
+See `reports/latest.md`. Numbers below are from a local `pnpm eval --mode all` run. **`mock` is the harness demo, not a model.** Compare `bare_llm`, `constrained_llm`, and `jev` only.
 
 | mode | n | legal_rate | exact_accuracy | unsafe_action_rate | false_auto_rate | false_escalate_rate | parse_fail_rate | illegal_id_rate |
-| --- | --- | --- | --- | --- | --- | --- | --- | --- |
+| --- | --- | ---: | ---: | ---: | ---: | ---: | ---: | ---: |
 | mock (demo) | 40 | 95.0% | 87.5% | 5.0% | 5.0% | 2.5% | 2.5% | 2.5% |
+| bare_llm | 40 | 100.0% | 92.5% | 5.0% | 5.0% | 2.5% | 0.0% | 0.0% |
+| constrained_llm | 40 | 100.0% | 85.0% | 5.0% | 5.0% | 10.0% | 0.0% | 0.0% |
+| jev | 40 | 100.0% | 100.0% | 0.0% | 0.0% | 0.0% | 0.0% | 0.0% |
 
-Sanity check: `--script gold` scores 100% exact / 0% unsafe on the same 40 fixtures.
+On this toy: Jev dropped `unsafe_action_rate` 5% → 0% (the LLM misses were 2/6 ambiguous bucket-C automations). `illegal_id_rate` was already 0% for both LLMs, so that half of the claim did not show a gap. Exact on A/B: Jev 8/8 and 8/8; bare 7/8 and 8/8; constrained 6/8 and 8/8. Constrained LLM lost exact accuracy to extra `__none__` refusals on A and F, not to better safety than bare on C.
 
-Live `bare_llm`, `constrained_llm`, and `jev` were **not run** in this workspace: `OPENAI_API_KEY` and `TYPESAFE_API_KEY` were unset. Do not invent those numbers. After adding keys:
-
-```bash
-pnpm eval --mode all
-```
+n = 40, one run. Do not treat 100% as a general Jev guarantee.
 
 ## Layout
 
