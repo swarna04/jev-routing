@@ -68,6 +68,10 @@ pnpm eval --mode all
 
 See `reports/latest.md`. After switching to the 180-line suite, only **mock** numbers from this tree apply. Do not carry over live LLM/Jev rates from the old 40-fixture toy.
 
+| mode | n | legal_rate | exact_accuracy | unsafe_action_rate | false_auto_rate | false_escalate_rate | parse_fail_rate | illegal_id_rate |
+| --- | --- | ---: | ---: | ---: | ---: | ---: | ---: | ---: |
+| mock (demo) | 180 | 98.9% | 97.2% | 0.6% | 0.6% | 0.6% | 0.6% | 0.6% |
+
 ## Constraints
 
 - Dry-run routing only
