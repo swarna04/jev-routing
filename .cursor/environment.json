@@ -1,0 +1,4 @@
+{
+  "name": "jev-routing",
+  "install": "bash .cursor/install.sh"
+}
