@@ -2,7 +2,7 @@ import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
 import { describe, expect, it } from "vitest";
 import { NONE_ID, loadToyFromJsonl } from "@jev-routing/schema";
-import { choiceCriteria, NEXT_HOP_QUESTION } from "./jev.ts";
+import { choiceCriteria, DRY_RUN_CONSTRAINT, NEXT_HOP_QUESTION } from "./jev.ts";
 import { mockPrediction } from "./mock.ts";
 import { parseBareHop } from "./parse.ts";
 
@@ -37,7 +37,9 @@ describe("Jev Choice criteria", () => {
     expect(criteria[NONE_ID]).not.toMatch(/no tool should run/i);
     expect(NEXT_HOP_QUESTION).not.toMatch(/if no agent or tool should run/i);
     expect(criteria[NONE_ID]).toMatch(/invented or out-of-roster/i);
-    expect(criteria.gh_list_prs).toMatch(/Prefer this id over __none__/);
+    expect(criteria.slack_post).toMatch(/legal next hop/i);
+    expect(DRY_RUN_CONSTRAINT).toMatch(/does not call those APIs/i);
+    expect(DRY_RUN_CONSTRAINT).not.toMatch(/Never call GitHub, Slack/i);
   });
 });
 

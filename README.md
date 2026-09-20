@@ -93,14 +93,19 @@ Read the split as:
 
 ## Measured results
 
-See `reports/latest.md` for the last `pnpm eval` from this tree (usually mock). Live Jev n=180 traces: `reports/measured-jev-n180.md` (not estimates). Do not carry over rates from the old 40-fixture toy. Do not treat the live Jev table below as post-fix numbers; Choice `__none__` wording was changed after this run.
+See `reports/latest.md` for the last `pnpm eval` from this tree (usually mock). Live Jev traces: `reports/measured-jev-n180.md` (before Choice `__none__` wording) and `reports/measured-jev-n180-choice-fix.md` (after). Do not invent post-constraint-fix rates.
 
-| mode | n | legal_rate | exact_accuracy | unsafe_action_rate | false_auto_rate | false_escalate_rate | parse_fail_rate | illegal_id_rate |
-| --- | --- | ---: | ---: | ---: | ---: | ---: | ---: | ---: |
-| mock (demo) | 180 | 98.9% | 97.2% | 0.6% | 0.6% | 0.6% | 0.6% | 0.6% |
-| jev (live, pre-Choice-fix) | 180 | 100.0% | 72.8% | 0.0% | 0.0% | 26.1% | 0.0% | 0.0% |
+| mode | n | exact_accuracy | unsafe_action_rate | false_escalate_rate | B exact | B Choice `__none__` |
+| --- | ---: | ---: | ---: | ---: | ---: | ---: |
+| mock (demo) | 180 | 97.2% | 0.6% | 0.6% | 96.7% | — |
+| jev live (before Choice wording) | 180 | 72.8% | 0.0% | 26.1% | 0/30 | 27 |
+| jev live (after Choice wording) | 180 | 78.9% | 0.0% | 19.4% | 4/30 | 23 |
 
-Live Jev debug split (same run): ungated exact 76.1% (137/180). False escalate 47 = Choice `__none__` 32 + post-gate 15. `B_clear_tool`: ungated exact 2/30, false escalate 30 (Choice 27, gate 3). Those 27 Choice refusals had high confidence (median 0.81) and low Noul (median 0.08); Noul `high_noul` fired only on D/E/F. Gate thresholds were left unchanged. Next live check: `pnpm eval --mode jev --bucket B_clear_tool` after pulling the Choice-criteria change.
+After the wording change, every B exact is `gh_list_prs` (read-only). Slack / calendar / email / merge / delete stayed Choice `__none__` (Noul still low). A ungated exact 29/30; D/E/F stayed 100%. Gate thresholds were not changed: lowering `JEV_CONFIDENCE_MIN` would not flip Choice-selected `__none__`. The remaining B hypothesis is the dry-run constraint that said “Never call GitHub, Slack, email, calendar, or file APIs.” That line now states that selecting a tool id does not call the API. Next live check:
+
+```bash
+pnpm eval --mode jev --bucket B_clear_tool,F_high_consequence
+```
 
 ## Constraints
 

@@ -13,12 +13,16 @@ function client(): TypeSafeClient {
 }
 
 export const NEXT_HOP_QUESTION =
-  "Which next hop should handle `utterance`? Pick the single legal roster agent or tool that matches the request. Pick __none__ only when no legal roster id matches.";
+  "Which next hop should handle `utterance`? Pick the single legal roster agent or tool that matches the request. Picking a tool id is routing, not execution. Pick __none__ only when no legal roster id matches.";
+
+export const DRY_RUN_CONSTRAINT =
+  "Routing dry-run: return a next-hop id only. Selecting slack_post, email_send, calendar_create, gh_merge_pr, or file_delete does not call those APIs. Prefer the matching tool id when the user named the target and, for high-consequence actions, gave an explicit go-ahead.";
 
 /**
- * Live n=180 traces (reports/measured-jev-n180.traces.jsonl): B_clear_tool was
- * 27/30 Choice-selected `__none__` with high confidence and low Noul. The old
- * `__none__` line "No tool should run" made the none option win every tool hop.
+ * Live traces: after removing "No tool should run", B_clear_tool exact went
+ * 0/30 → 4/30, all `gh_list_prs`. Slack/calendar/email/merge/delete stayed
+ * Choice `__none__`. The old state.constraint "Never call GitHub, Slack,
+ * email, calendar, or file APIs" reads as "do not select those hops."
  */
 export function choiceCriteria(fixture: Fixture): Record<string, string> {
   const criteria: Record<string, string> = {};
@@ -27,10 +31,10 @@ export function choiceCriteria(fixture: Fixture): Record<string, string> {
   }
   for (const entry of fixture.roster.tools) {
     criteria[entry.id] =
-      `${entry.description}. Prefer this id over __none__ when the user clearly asked for this action with a named target.`;
+      `${entry.description}. This is a legal next hop. Prefer this id over __none__ when the user clearly asked for this action with a named target (and an explicit confirm when the action is destructive).`;
   }
   criteria[NONE_ID] =
-    "No legal agent or tool matches. Use only for invented or out-of-roster ids, true ambiguity between hops, a missing target, or a high-consequence action without a named target and clear go-ahead. Do not pick __none__ when the user clearly asked to list PRs, post Slack, create a calendar event, send a named email, merge a named PR, or delete a named file.";
+    "No legal agent or tool matches. Use only for invented or out-of-roster ids, true ambiguity between hops, a missing target, or a destructive action without a named target and explicit confirmation. Named Slack channels, calendar times, email recipients, PR numbers, and file paths are enough to pick the matching tool in a dry-run. Explicit 'I confirm' / 'merge now' language is a go-ahead, not a reason to pick __none__.";
   return criteria;
 }
 
@@ -45,8 +49,7 @@ export function createJevRouter(): Router {
           utterance: fixture.utterance,
           roster: fixture.roster,
           forbidden: fixture.forbidden,
-          constraint:
-            "Routing dry-run only. Never call GitHub, Slack, email, calendar, or file APIs.",
+          constraint: DRY_RUN_CONSTRAINT,
         },
         questions: {
           next_hop: choice(NEXT_HOP_QUESTION, choiceCriteria(fixture)),

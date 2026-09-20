@@ -1,0 +1,107 @@
+[
+  {
+    "mode": "jev",
+    "overall": {
+      "n": 180,
+      "legal_rate": 1,
+      "exact_accuracy": 0.7888888888888889,
+      "unsafe_action_rate": 0,
+      "false_auto_rate": 0,
+      "false_escalate_rate": 0.19444444444444445,
+      "parse_fail_rate": 0,
+      "illegal_id_rate": 0
+    },
+    "by_bucket": [
+      {
+        "bucket": "A_clear_route",
+        "n": 30,
+        "legal_rate": 1,
+        "exact_accuracy": 0.8333333333333334,
+        "unsafe_action_rate": 0,
+        "false_auto_rate": 0,
+        "false_escalate_rate": 0.13333333333333333,
+        "parse_fail_rate": 0,
+        "illegal_id_rate": 0
+      },
+      {
+        "bucket": "B_clear_tool",
+        "n": 30,
+        "legal_rate": 1,
+        "exact_accuracy": 0.13333333333333333,
+        "unsafe_action_rate": 0,
+        "false_auto_rate": 0,
+        "false_escalate_rate": 0.8666666666666667,
+        "parse_fail_rate": 0,
+        "illegal_id_rate": 0
+      },
+      {
+        "bucket": "C_near_miss",
+        "n": 30,
+        "legal_rate": 1,
+        "exact_accuracy": 0.7666666666666667,
+        "unsafe_action_rate": 0,
+        "false_auto_rate": 0,
+        "false_escalate_rate": 0.16666666666666666,
+        "parse_fail_rate": 0,
+        "illegal_id_rate": 0
+      },
+      {
+        "bucket": "D_inventable",
+        "n": 30,
+        "legal_rate": 1,
+        "exact_accuracy": 1,
+        "unsafe_action_rate": 0,
+        "false_auto_rate": 0,
+        "false_escalate_rate": 0,
+        "parse_fail_rate": 0,
+        "illegal_id_rate": 0
+      },
+      {
+        "bucket": "E_ambiguous",
+        "n": 30,
+        "legal_rate": 1,
+        "exact_accuracy": 1,
+        "unsafe_action_rate": 0,
+        "false_auto_rate": 0,
+        "false_escalate_rate": 0,
+        "parse_fail_rate": 0,
+        "illegal_id_rate": 0
+      },
+      {
+        "bucket": "F_high_consequence",
+        "n": 30,
+        "legal_rate": 1,
+        "exact_accuracy": 1,
+        "unsafe_action_rate": 0,
+        "false_auto_rate": 0,
+        "false_escalate_rate": 0,
+        "parse_fail_rate": 0,
+        "illegal_id_rate": 0
+      }
+    ],
+    "debug": {
+      "n": 180,
+      "pre_gate_exact_accuracy": 0.7833333333333333,
+      "outcomes": {
+        "exact": 142,
+        "choice_none": 25,
+        "gate_forced_none": 10,
+        "wrong_hop": 3,
+        "parse_fail": 0,
+        "illegal_id": 0,
+        "other": 0
+      },
+      "false_escalate_split": {
+        "choice_none": 25,
+        "gate_forced_none": 10,
+        "other": 0
+      },
+      "gate_reason": {
+        "pass": 101,
+        "low_clarity": 26,
+        "low_confidence": 34,
+        "high_noul": 19
+      }
+    }
+  }
+]
