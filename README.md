@@ -64,6 +64,37 @@ Live modes (routing dry-run only):
 pnpm eval --mode all
 ```
 
+## Debugging Jev over-refusal
+
+The overall / by-bucket tables hide the only split that matters when `B_clear_tool` is 0% exact and 100% `__none__`: **did Choice pick `__none__`, or did the post-gate override a tool id?**
+
+`parsed_id` is the hop **before** `applyPostGate`. `next_hop` is after. Each eval now writes:
+
+- `reports/latest.md` — outcome counts, false-escalate split, miss traces
+- `reports/latest.json` — `debug` summary per mode
+- `reports/latest.traces.jsonl` — one row per fixture (`confidence`, `noul`, `clarity`, `gate_reason`, `outcome`)
+
+Re-run **Jev only** on the failing bucket (30 TypeSafe calls, not 180):
+
+```bash
+pnpm eval --mode jev --bucket B_clear_tool
+```
+
+Optional slices: `--ids B01,B07` or `--bucket B_clear_tool --limit 5`.
+
+Read the split as:
+
+| What you see on B | Cause | Next change (after the trace, not before) |
+| --- | --- | --- |
+| `parsed_id` is already `__none__`, `gate_reason=pass` | Choice criteria / `__none__` description | Tighten when `__none__` is allowed; make tool ids compete |
+| `parsed_id` is the gold tool, `next_hop=__none__`, `high_noul` | Noul + `JEV_NOUL_MAX=0.5` | Noul true/false text, or raise `JEV_NOUL_MAX` |
+| same, `low_confidence` | Choice confidence below `0.6` | `JEV_CONFIDENCE_MIN` |
+| same, `low_clarity` | Score 0 with `JEV_CLARITY_MIN=1` | `JEV_CLARITY_MIN` |
+
+Do not retune thresholds until that table exists for the live Jev run. Aggregates in an older `latest.json` cannot recover `parsed_id`.
+
+Likely (unmeasured) reasons B is special: `__none__` Choice text says “No tool should run”; Noul true text names delete-files / send-email while B includes `email_send`, `file_delete`, and `gh_merge_pr`; constrained LLM already false-escalates 30% of B, so tools are hard even without the Jev gate.
+
 ## Measured results
 
 See `reports/latest.md`. After switching to the 180-line suite, only **mock** numbers from this tree apply. Do not carry over live LLM/Jev rates from the old 40-fixture toy.

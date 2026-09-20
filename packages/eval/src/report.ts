@@ -1,3 +1,4 @@
+import { formatDebugSection } from "./debug.ts";
 import { METRIC_HEADERS, type Metrics, type ScoreCard } from "./score.ts";
 
 function pct(value: number): string {
@@ -58,6 +59,8 @@ export function formatReport(cards: ScoreCard[], extras: string[] = []): string 
     formatMetricsTable(cards),
     "",
     ...cards.flatMap((card) => [formatBucketTables(card), ""]),
+    formatDebugSection(cards),
+    "",
     ...extras,
   ];
   return `${lines.join("\n").trim()}\n`;

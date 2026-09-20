@@ -1,4 +1,16 @@
 export {
+  classifyOutcome,
+  debugSummary,
+  filterFixtures,
+  formatDebugSection,
+  parseBucketList,
+  splitCsv,
+  tracesFromCard,
+  type DebugSummary,
+  type OutcomeClass,
+  type TraceRow,
+} from "./debug.ts";
+export {
   applyPostGate,
   DEFAULT_GATE_POLICY,
   gatePolicyFromEnv,

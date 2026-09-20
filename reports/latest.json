@@ -78,6 +78,29 @@
         "parse_fail_rate": 0,
         "illegal_id_rate": 0
       }
-    ]
+    ],
+    "debug": {
+      "n": 180,
+      "pre_gate_exact_accuracy": 0.9722222222222222,
+      "outcomes": {
+        "exact": 175,
+        "choice_none": 1,
+        "gate_forced_none": 0,
+        "wrong_hop": 2,
+        "parse_fail": 1,
+        "illegal_id": 1,
+        "other": 0
+      },
+      "false_escalate_split": {
+        "choice_none": 1,
+        "gate_forced_none": 0,
+        "other": 0
+      },
+      "gate_reason": {
+        "pass": 178,
+        "parse_fail": 1,
+        "illegal_id": 1
+      }
+    }
   }
 ]
