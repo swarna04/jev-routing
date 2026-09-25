@@ -47,6 +47,7 @@ export type GateResult = {
 /**
  * Fail-closed post-gate:
  * - unparsed or illegal id → fail (no hop)
+ * - Choice already returned __none__ → pass (do not relabel it as a gate trip)
  * - low confidence or high Noul (or optional low clarity) → force __none__
  */
 export function applyPostGate(
@@ -69,6 +70,15 @@ export function applyPostGate(
       illegalId: true,
       gated: true,
       gateReason: "illegal_id",
+    };
+  }
+  if (input.parsedId === NONE_ID) {
+    return {
+      nextHop: NONE_ID,
+      legal: true,
+      illegalId: false,
+      gated: false,
+      gateReason: "pass",
     };
   }
   if (input.confidence !== undefined && input.confidence < policy.confidenceMin) {

@@ -118,4 +118,18 @@ describe("post-gate", () => {
     expect(noul.nextHop).toBe(NONE_ID);
     expect(noul.gateReason).toBe("high_noul");
   });
+
+  it("leaves a Choice __none__ as pass when Noul or confidence would otherwise trip", () => {
+    const result = applyPostGate({
+      parsedId: NONE_ID,
+      parseFail: false,
+      roster: ROSTER,
+      confidence: 0.2,
+      noul: 0.9,
+      clarity: 0.4,
+    });
+    expect(result.nextHop).toBe(NONE_ID);
+    expect(result.gated).toBe(false);
+    expect(result.gateReason).toBe("pass");
+  });
 });
